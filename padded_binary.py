@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 Collection of functions to write a string of binary numbers into bytes.
-This string may not by divisible by 8 so the final byte needs
+This string may not be divisible by 8 so the final byte needs
 to be padded out to avoid the containment of garbage data. The length of this
 padding may not be known later so the length is prepended to the file in the
 first three bits.
 
 """
-
 
 
 def write_padded_bytes(bin_string,file_name):
@@ -28,14 +27,14 @@ def write_padded_bytes(bin_string,file_name):
     None.
 
     """
-    pad_length =  8 - (len(bin_string)+3)%8 # the amount of padding needed
+    pad_length = 8 - (len(bin_string)+3) % 8  # the amount of padding needed
     if pad_length != 8:
         pad_string = make_pad_string(pad_length)
     else:
-        pad_string=''
+        pad_string = ''
         pad_length = 0
-    pad_length = "{0:03b}".format(pad_length) # pad_length as 3 bit number
-    string =''.join( [pad_length,bin_string,pad_string])
+    pad_length = "{0:03b}".format(pad_length)  # pad_length as 3 bit number
+    string = ''.join( [pad_length, bin_string, pad_string])
     with open(file_name, 'wb') as file:
         file.write(string_to_bytes(string))
 
@@ -54,11 +53,11 @@ def read_padded_bytes(file_name):
         bytes from file converted to string of 1's and 0's
 
     """
-    bin_list =[]
+    bin_list = []
     with open(file_name, 'rb') as file:
         binaries = file.read()
     for byte in binaries:
-        bin_string ='{0:08b}'.format(byte)
+        bin_string = '{0:08b}'.format(byte)
         bin_list.append(bin_string)
     bin_string = strip_padding(bin_list)
     return bin_string
@@ -76,7 +75,7 @@ def strip_padding(bin_list):
         A single binary string
 
     """
-    padding_size = int( str(bin_list[0][0:3]),2 )
+    padding_size = int(str(bin_list[0][0:3]), 2)
     bin_list[0] = bin_list[0][3:]
     bin_list[-1] = bin_list[-1][:len(bin_list[-1])-padding_size]
     return ''.join(bin_list)
@@ -94,10 +93,10 @@ def make_pad_string(length):
         string of 0's that will pad out the last byte of a file
     """
     i=0
-    pad_string =''
-    while i<length:
+    pad_string = ''
+    while i < length:
         pad_string = pad_string+'0'
-        i +=1
+        i += 1
     return pad_string
 
 def string_to_bytes(data):
@@ -124,10 +123,10 @@ def test():
 
     """
     string = "101010101010011111111111111"
-    write_padded_bytes(string,'testsavePadded.bin')
+    write_padded_bytes(string, 'testsavePadded.bin')
     bin_string = read_padded_bytes('testsavePadded.bin')
     if bin_string == string:
-        print( "success")
+        print("success")
     else:
         print(bin_string[0:10])
 

@@ -54,7 +54,7 @@ class HuffmanCoding:
             heapq.heappush(node_heap, node)
         return node_heap
 
-    def build_tree(self,node_heap):
+    def build_tree(self, node_heap):
         """
         Builds the Huffman tree with node_heap
         final result is a list with only the root node
@@ -142,7 +142,7 @@ class HuffmanCoding:
         """
         symbols_by_length = {}  # list of lists of codes, each sublist by length
         canonical_codes = {}  # symbol:canonical code
-        sorted_symbols = []  # list of codes,by bit size, then lexigraphical order
+        sorted_symbols = []  # list of codes, by bit size, then lexicographical order
         # create a list of lists, each list containing sorted symbols
         # with the same bit length
         for symbol in self.huff_codes:
@@ -302,7 +302,7 @@ class HuffmanCoding:
         print("Compressing into Huffman code...")
         fixed = False
         if fixed_dict is None:
-            # get the all of the occurrences of each symbol
+            # get the all occurrences of each symbol
             occurrences = Counter(data)
             # make nodes with the dictionary and add them to the heap
             node_heap = self.make_heap(occurrences)
@@ -312,13 +312,13 @@ class HuffmanCoding:
 
         node_heap = self.build_tree(node_heap)
         root = heapq.heappop(node_heap)
-        self.make_code_dict(root, "") # makes "regular" Huffman codes
+        self.make_code_dict(root, "")  # makes "regular" Huffman codes
         canonical_codes, sorted_symbols, compress_lengths, num_lengths = self.make_canonical_codes()
         self.huff_codes = canonical_codes
         encoded_text, encoded_list = self.get_encoded_data(data)
 
         if fixed is False:
-            header = self.build_file_header(data,compress_lengths,num_lengths)
+            header = self.build_file_header(data, compress_lengths, num_lengths)
             canonical_dict = ''.join(compress_lengths) + ''.join(sorted_symbols)
             file_info = header + canonical_dict + encoded_text
             print('dictionary size: ', len(canonical_dict)/8, 'bytes')
