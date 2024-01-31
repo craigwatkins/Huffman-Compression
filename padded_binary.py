@@ -9,7 +9,7 @@ first three bits.
 """
 
 
-def write_padded_bytes(bin_string,file_name):
+def write_padded_bytes(bin_string, file_name):
     """
     Writes bytes to bin file and pads it.
     It always assumes padding is necessary and adds pad length info.
@@ -38,6 +38,7 @@ def write_padded_bytes(bin_string,file_name):
     with open(file_name, 'wb') as file:
         file.write(string_to_bytes(string))
 
+
 def read_padded_bytes(file_name):
     """
     Opens binary file, removes padding and returns binary string,
@@ -62,23 +63,24 @@ def read_padded_bytes(file_name):
     bin_string = strip_padding(bin_list)
     return bin_string
 
+
 def strip_padding(bin_list):
     """
     Parameters
     ----------
     bin_list : list of strings
-        Each string is one byte of information
+        Each string is one byte's worth of information
 
     Returns
     -------
     string
         A single binary string
-
     """
     padding_size = int(str(bin_list[0][0:3]), 2)
     bin_list[0] = bin_list[0][3:]
     bin_list[-1] = bin_list[-1][:len(bin_list[-1])-padding_size]
     return ''.join(bin_list)
+
 
 def make_pad_string(length):
     """
@@ -90,7 +92,7 @@ def make_pad_string(length):
     Returns
     -------
     pad_string : binary string
-        string of 0's that will pad out the last byte of a file
+        0's that will pad out the last byte of a file
     """
     i=0
     pad_string = ''
@@ -99,12 +101,13 @@ def make_pad_string(length):
         i += 1
     return pad_string
 
+
 def string_to_bytes(data):
     """
     Parameters
     ----------
     data : binary string
-        string of 1's and 0's to be converted into bytes
+        1's and 0's to be converted into bytes
 
     Returns
     -------
@@ -117,18 +120,6 @@ def string_to_bytes(data):
         byte_obj.append(int(data[i:i+8], 2))
     return bytes(byte_obj)
 
-def test():
-    """
-    Test code
-
-    """
-    string = "101010101010011111111111111"
-    write_padded_bytes(string, 'testsavePadded.bin')
-    bin_string = read_padded_bytes('testsavePadded.bin')
-    if bin_string == string:
-        print("success")
-    else:
-        print(bin_string[0:10])
 
 def main():
     """
@@ -139,8 +130,15 @@ def main():
     None.
 
     """
-    test()
+    # Test code
+    string = "101010101010011111111111111"
+    write_padded_bytes(string, 'testsavePadded.bin')
+    bin_string = read_padded_bytes('testsavePadded.bin')
+    if bin_string == string:
+        print("success")
+    else:
+        print(bin_string[0:10])
+
 
 if __name__ == "__main__":
-
     main()
