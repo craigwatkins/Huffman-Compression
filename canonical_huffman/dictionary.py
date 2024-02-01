@@ -3,7 +3,7 @@ Dictionary class
 properties: huffman_tree, huffman_dictionary, canonical huffman dictionary
 methods: build_huffman_tree, build_huffman_dictionary, build_canonical_huffman_dictionary, get_canonical_huffman_dictionary
 """
-from node import Node
+from .node import Node
 import heapq
 import bisect
 from collections import Counter
