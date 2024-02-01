@@ -1,6 +1,4 @@
 .pypirc
-setup.cfg
-setup.py
 dist/
 *.egg-info/
 build/
