@@ -1,6 +1,6 @@
 
-from dictionary import HuffmanDictionary
-from padded_binary import write_padded_bytes, read_padded_bytes
+from .dictionary import HuffmanDictionary
+from .padded_binary import write_padded_bytes, read_padded_bytes
 
 class HuffmanCoding:
     """
